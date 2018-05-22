@@ -9,15 +9,14 @@ var burger = {
     },
 
     // the variables for columns and values arrays
-    create: function(cols, vals, cb) {
-        orm.create("burger", cols, vals, function(res){
-            cb(res);
-        });
+    create: function(name, cb) {
+        orm.create("burger", ["burger_name", "devoured"], [name, false], cb );
     },
-    update: function(objColVals, condition, cb){
-        orm.update("burger", objColVals, condition, function(res) {
-            cb(res);
-        });
+
+    update: function(id, cb){
+        var condition = "id = " +id;
+        orm.update("burger", {devoured:true}, condition, cb);
+
     },
 
     delete: function(condition, cb) {

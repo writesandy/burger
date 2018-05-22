@@ -1,22 +1,38 @@
-'use strict';
+
+$( document ).ready(function() {
+
 
 $(".create-form").on("submit", function (event){
     event.preventDefault();
+    var newBurger = $("#bgr").val().trim();
 
-    var newBurger = {
-        burger_name: $("#bgr").val().trim()
-    };
-
-    $.ajax("api/burger", {
-        type: "POST",
-        data: newBurger
+    $.ajax({
+        method: "POST",
+        url: "/burgers",
+        data: { burgerName: newBurger }
     }).then(
-        function() {
-            console.log("created new burger");
+        function(fromTheServer) {
+            // console.log(fromTheServer);
 
             location.reload();
-        }
-    );
+        })
+    })
+
+    $(".change-burger").on("click", function (event) {
+        event.preventDefault();
+        console.log($(this).data("id"))
+        var burgerEaten = $(this).data("id")
+        $.ajax({
+            method: "PUT",
+            url:"/burgers/" +burgerEaten,
+
+        }).then(
+          function(frmTheServer) {
+              console.log("return from the great beyond!")
+                location.reload();
+            })
+    })
+
 });
 
 
